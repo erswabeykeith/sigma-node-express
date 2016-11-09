@@ -22,11 +22,18 @@ app.post('/songs', function(req, res) {
   // req.body is supplied by bodyParser above
   console.log("REQ body: ", req.body);
   var newSong = req.body;
-  songs.push(newSong);
+  if(checkForDuplicates(newSong){
+    res.sendStatus(401);
+  }
+  else{
+    // created new resource
+    songs.push(newSong);
+    res.sendStatus(201);
+    }
+  });
 
-  // created new resource
-  res.sendStatus(201);
-});
+
+
 
 app.get('/songs', function(req, res) {
   console.log('handling get request for songs');
@@ -47,3 +54,19 @@ app.get('/*', function(req, res) {
 app.listen(app.get('port'), function() {
   console.log('Server is listening on port ' + app.get('port'));
 });
+
+  //functions
+  function checkForDuplicates(newSong) {
+    for (var i = 0; i < songs.length; i++) {
+      if(songs[i].title === newSong.title) {
+        return true;
+      }
+       else {
+         return false;
+        }
+      }
+    }
+
+    function chekforBlanks(newSong){
+
+    }
